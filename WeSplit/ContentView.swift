@@ -53,7 +53,9 @@ struct ContentView: View {
                             Text("\($0) people")
                         }
                     }
-                   }
+                }header: {
+                    Text("Amount per Person")
+                }
                 Section {
 //                    Text("How much tip do you want to leave?")
                     Picker("Tip percentage", selection: $tipPercentage) {
