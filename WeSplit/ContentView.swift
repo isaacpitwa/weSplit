@@ -28,6 +28,10 @@ struct ContentView: View {
         return amountPerPerson;
     }
     
+    //    For managing Input to remove Keyboard
+    
+    @FocusState private var amountIsFocused: Bool
+    
     
     var body: some View {
         NavigationView{
@@ -43,7 +47,7 @@ struct ContentView: View {
                     }
                 }
                 Section {
-                       TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD")).focused($amountIsFocused)
                     Picker("Number of People",selection: $numberOfPeople){
                         ForEach(2..<100){
                             Text("\($0) people")
@@ -65,7 +69,14 @@ struct ContentView: View {
                    Section {
                        Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "USD")).keyboardType(.decimalPad)
                    }
-            }.navigationTitle("WeSplit")
+            }.navigationTitle("WeSplit").toolbar{
+                ToolbarItemGroup(placement: .keyboard){
+                    Spacer()
+                    Button("Done"){
+                        amountIsFocused = false
+                    }
+                }
+            }
         }
     }
 }
